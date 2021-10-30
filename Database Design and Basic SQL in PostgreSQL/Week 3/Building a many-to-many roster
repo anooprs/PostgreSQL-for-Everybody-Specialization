@@ -1,0 +1,71 @@
+CREATE TABLE student (
+    id SERIAL,
+    name VARCHAR(128) UNIQUE,
+    PRIMARY KEY(id)
+);
+
+DROP TABLE course CASCADE;
+
+CREATE TABLE course (
+    id SERIAL,
+    title VARCHAR(128) UNIQUE,
+    PRIMARY KEY(id)
+);
+
+DROP TABLE roster CASCADE;
+
+CREATE TABLE roster (
+    id SERIAL,
+    student_id INTEGER REFERENCES student(id) ON DELETE CASCADE,
+    course_id INTEGER REFERENCES course(id) ON DELETE CASCADE,
+    role INTEGER,
+    UNIQUE(student_id, course_id),
+    PRIMARY KEY (id)
+);
+
+insert into student (name) values ('Leyna');
+insert into student (name) values ('Caryss');
+insert into student (name) values ('Colvin');
+insert into student (name) values ('Flyn');
+insert into student (name) values ('Kori');
+insert into student (name) values ('Rahma');
+insert into student (name) values ('Bill');
+insert into student (name) values ('Kaily');
+insert into student (name) values ('Kaye');
+insert into student (name) values ('Shilpa');
+insert into student (name) values ('Sania');
+insert into student (name) values ('Kerry');
+insert into student (name) values ('Name');
+insert into student (name) values ('Shakeira');
+insert into student (name) values ('Tegan');
+
+select * from student;
+
+insert into course (title) values ('si106');
+insert into course (title) values ('si110');
+insert into course (title) values ('si206');
+
+select * from course; 
+
+insert into roster(student_id, course_id, role) VALUES(1, 1, 1);
+insert into roster(student_id, course_id, role) VALUES(2, 1, 0);
+insert into roster(student_id, course_id, role) VALUES(3, 1, 0);
+insert into roster(student_id, course_id, role) VALUES(4, 1, 0);
+insert into roster(student_id, course_id, role) VALUES(5, 1, 0);
+insert into roster(student_id, course_id, role) VALUES(6, 2, 1);
+insert into roster(student_id, course_id, role) VALUES(7, 2, 0);
+insert into roster(student_id, course_id, role) VALUES(8, 2, 0);
+insert into roster(student_id, course_id, role) VALUES(9, 2, 0);
+insert into roster(student_id, course_id, role) VALUES(10, 2, 0);
+insert into roster(student_id, course_id, role) VALUES(11, 3, 1);
+insert into roster(student_id, course_id, role) VALUES(12, 3, 0);
+insert into roster(student_id, course_id, role) VALUES(13, 3, 0);
+insert into roster(student_id, course_id, role) VALUES(14, 3, 0);
+insert into roster(student_id, course_id, role) VALUES(15, 3, 0);
+
+
+SELECT student.name, course.title, roster.role
+    FROM student 
+    JOIN roster ON student.id = roster.student_id
+    JOIN course ON roster.course_id = course.id
+    ORDER BY course.title, roster.role DESC, student.name;
